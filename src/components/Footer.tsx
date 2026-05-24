@@ -1,8 +1,18 @@
 import Link from "next/link";
+import Newsletter from "@/components/Newsletter";
 
 export default function Footer() {
   return (
     <footer className="bg-coffee text-ivory mt-24">
+      <div className="container mx-auto max-w-6xl px-6 pt-12 pb-6 text-center border-b border-ivory/10">
+        <h3 className="font-display text-2xl font-bold mb-2">
+          Yeni ürünleri ilk siz keşfedin
+        </h3>
+        <p className="text-ivory/60 text-sm mb-5">
+          Kampanyalar ve yeni gelen ürünler için haftalık bülten.
+        </p>
+        <Newsletter />
+      </div>
       <div className="container mx-auto max-w-6xl px-6 py-16 grid grid-cols-2 md:grid-cols-4 gap-10">
         <div className="col-span-2 md:col-span-1">
           <div className="font-display text-2xl font-bold mb-3">
@@ -20,6 +30,7 @@ export default function Footer() {
             <li><Link href="/urunler/dart" className="hover:text-gold">Dart</Link></li>
             <li><Link href="/urunler/oyun" className="hover:text-gold">Oyun</Link></li>
             <li><Link href="/oyun-secici" className="hover:text-gold">Oyun Seçici</Link></li>
+            <li><Link href="/oda-hesaplayici" className="hover:text-gold">Oda Hesaplayıcı</Link></li>
             <li><Link href="/rehber" className="hover:text-gold">Bilardo Rehberi</Link></li>
             <li><Link href="/toptan" className="hover:text-gold">Toptan / Kurumsal</Link></li>
           </ul>

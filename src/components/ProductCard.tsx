@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Heart, ShoppingCart, Check, Scale } from "lucide-react";
+import { toast } from "sonner";
 import type { Product } from "@/lib/products";
 import { formatPrice } from "@/lib/products";
 import { useCart } from "@/contexts/CartContext";
@@ -29,7 +30,13 @@ export default function ProductCard({ product }: { product: Product }) {
           onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
+            const willBeFavorite = !fav;
             toggle(product);
+            toast.success(
+              willBeFavorite
+                ? "Favorilere eklendi"
+                : "Favorilerden çıkarıldı",
+            );
           }}
           aria-label={fav ? "Favorilerden çıkar" : "Favorilere ekle"}
           className={`w-9 h-9 rounded-full flex items-center justify-center transition-all ${
@@ -45,7 +52,11 @@ export default function ProductCard({ product }: { product: Product }) {
             e.stopPropagation();
             const result = toggleCompare(product);
             if (result === "full") {
-              alert("En fazla 3 ürün karşılaştırabilirsiniz.");
+              toast.error("En fazla 3 ürün karşılaştırabilirsiniz");
+            } else if (result === "added") {
+              toast.success("Karşılaştırma listesine eklendi");
+            } else {
+              toast.success("Karşılaştırmadan çıkarıldı");
             }
           }}
           aria-label={inCompare ? "Karşılaştırmadan çıkar" : "Karşılaştır"}
@@ -98,7 +109,11 @@ export default function ProductCard({ product }: { product: Product }) {
       <div className="px-4 pb-4">
         <button
           type="button"
-          onClick={() => !outOfStock && addItem(product)}
+          onClick={() => {
+            if (outOfStock) return;
+            addItem(product);
+            toast.success("Sepete eklendi", { description: product.name });
+          }}
           disabled={outOfStock}
           className={`w-full flex items-center justify-center gap-2 py-2.5 rounded-md text-sm font-semibold transition-colors ${
             outOfStock

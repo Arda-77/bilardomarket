@@ -1,6 +1,7 @@
 "use client";
 
 import { Heart, ShoppingCart, Check } from "lucide-react";
+import { toast } from "sonner";
 import type { Product } from "@/lib/products";
 import { useCart } from "@/contexts/CartContext";
 import { useFavorites } from "@/contexts/FavoritesContext";
@@ -15,7 +16,10 @@ export default function ProductActions({ product }: { product: Product }) {
     <div className="flex gap-3 mb-8">
       <button
         type="button"
-        onClick={() => addItem(product)}
+        onClick={() => {
+          addItem(product);
+          toast.success("Sepete eklendi", { description: product.name });
+        }}
         className={`flex-1 flex items-center justify-center gap-2 text-ivory font-semibold py-4 rounded-lg transition-colors ${
           inCart ? "bg-green-deep" : "bg-green hover:bg-green-deep"
         }`}
@@ -32,7 +36,13 @@ export default function ProductActions({ product }: { product: Product }) {
       </button>
       <button
         type="button"
-        onClick={() => toggle(product)}
+        onClick={() => {
+          const willBeFavorite = !fav;
+          toggle(product);
+          toast.success(
+            willBeFavorite ? "Favorilere eklendi" : "Favorilerden çıkarıldı",
+          );
+        }}
         aria-label={fav ? "Favorilerden çıkar" : "Favorilere ekle"}
         className={`border px-5 py-4 rounded-lg transition-colors ${
           fav

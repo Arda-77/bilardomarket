@@ -6,6 +6,9 @@ import Footer from "@/components/Footer";
 import ProductCard from "@/components/ProductCard";
 import ProductActions from "@/components/ProductActions";
 import StockIndicator from "@/components/StockIndicator";
+import ReviewSection from "@/components/ReviewSection";
+import RecentlyViewed from "@/components/RecentlyViewed";
+import ProductViewTracker from "@/components/ProductViewTracker";
 import {
   categoryNames,
   formatPrice,
@@ -117,10 +120,14 @@ export default async function ProductPage({
             </div>
           </div>
 
+          <ProductViewTracker product={product} />
+
+          <ReviewSection productId={product.id} />
+
           {/* Related products */}
           {related.length > 0 && (
-            <section>
-              <h2 className="text-3xl font-bold text-coffee mb-8">Benzer Ürünler</h2>
+            <section className="mt-16">
+              <h2 className="font-display text-3xl font-bold text-coffee mb-6">Benzer Ürünler</h2>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                 {related.map((p) => (
                   <ProductCard key={p.id} product={p} />
@@ -128,6 +135,8 @@ export default async function ProductPage({
               </div>
             </section>
           )}
+
+          <RecentlyViewed excludeId={product.id} />
         </div>
       </main>
       <Footer />
