@@ -113,47 +113,66 @@ export async function POST(request: NextRequest) {
     });
   }
 
+  // Try models in order — Gemini occasionally renames/retires them; the first
+  // success wins. The env var overrides this list entirely.
+  const modelCandidates = process.env.GEMINI_MODEL
+    ? [process.env.GEMINI_MODEL]
+    : ["gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash"];
+
+  let lastError: { status: number; body: string; model: string } | null = null;
+
   try {
-    const model = process.env.GEMINI_MODEL ?? "gemini-2.0-flash";
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;
-
-    const upstream = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-goog-api-key": apiKey,
-      },
-      body: JSON.stringify({
-        systemInstruction: { parts: [{ text: systemPrompt }] },
-        contents: toGeminiContents(messages),
-        generationConfig: {
-          maxOutputTokens: 600,
-          temperature: 0.6,
+    for (const model of modelCandidates) {
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;
+      const upstream = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-goog-api-key": apiKey,
         },
-      }),
-    });
-
-    if (!upstream.ok) {
-      const errText = await upstream.text();
-      console.error("Gemini API error:", upstream.status, errText);
-      return Response.json({
-        message:
-          "Üzgünüm, şu anda yanıt veremiyorum. Lütfen biraz sonra tekrar deneyin.",
+        body: JSON.stringify({
+          systemInstruction: { parts: [{ text: systemPrompt }] },
+          contents: toGeminiContents(messages),
+          generationConfig: { maxOutputTokens: 600, temperature: 0.6 },
+        }),
       });
+
+      if (upstream.ok) {
+        const data = (await upstream.json()) as {
+          candidates?: Array<{
+            content?: { parts?: Array<{ text?: string }> };
+          }>;
+        };
+        const text =
+          data.candidates?.[0]?.content?.parts
+            ?.map((p) => p.text)
+            .filter(Boolean)
+            .join("") ?? "Bir cevap üretemedim, lütfen tekrar deneyin.";
+        return Response.json({ message: text });
+      }
+
+      lastError = {
+        status: upstream.status,
+        body: (await upstream.text()).slice(0, 500),
+        model,
+      };
+      console.error("Gemini API error:", model, upstream.status, lastError.body);
+
+      // 404 means model is wrong — try next candidate. Other errors are likely
+      // auth/quota issues, no point cycling models.
+      if (upstream.status !== 404) break;
     }
 
-    const data = (await upstream.json()) as {
-      candidates?: Array<{
-        content?: { parts?: Array<{ text?: string }> };
-      }>;
-    };
-    const text =
-      data.candidates?.[0]?.content?.parts
-        ?.map((p) => p.text)
-        .filter(Boolean)
-        .join("") ?? "Bir cevap üretemedim, lütfen tekrar deneyin.";
+    if (process.env.GEMINI_DEBUG === "1" && lastError) {
+      return Response.json({
+        message: `[DEBUG] Gemini ${lastError.status} (model: ${lastError.model}): ${lastError.body}`,
+      });
+    }
+    return Response.json({
+      message:
+        "Üzgünüm, şu anda yanıt veremiyorum. Lütfen biraz sonra tekrar deneyin.",
+    });
 
-    return Response.json({ message: text });
   } catch (err) {
     console.error("Chat handler error:", err);
     return Response.json({
