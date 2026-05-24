@@ -45,7 +45,7 @@ function buildCatalogSummary(): string {
   for (const [slug, list] of byCat) {
     const sub = subBySlug.get(slug);
     if (!sub) continue;
-    const top = list.slice(0, 4); // first few products per subcategory
+    const top = list.slice(0, 4);
     lines.push(`\n## ${sub.name} (${list.length} ürün)`);
     for (const p of top) {
       const brand = p.brand ? `[${p.brand}] ` : "";
@@ -75,6 +75,14 @@ function getCatalog(): string {
   return cachedCatalog;
 }
 
+// Gemini expects role "user" or "model" and a different message shape.
+function toGeminiContents(messages: ChatMessage[]) {
+  return messages.map((m) => ({
+    role: m.role === "assistant" ? "model" : "user",
+    parts: [{ text: m.content }],
+  }));
+}
+
 export async function POST(request: NextRequest) {
   let body: ChatRequestBody;
   try {
@@ -96,37 +104,38 @@ export async function POST(request: NextRequest) {
     buildCartContext(body.cart),
   ].join("\n");
 
-  const apiKey = process.env.ANTHROPIC_API_KEY;
+  const apiKey = process.env.GEMINI_API_KEY ?? process.env.GOOGLE_API_KEY;
 
   if (!apiKey) {
     return Response.json({
       message:
-        "Sohbet servisi henüz yapılandırılmadı. Yöneticinin ANTHROPIC_API_KEY çevre değişkenini ayarlaması gerekiyor. Şimdilik info@bilardomarket.com adresinden bize ulaşabilirsiniz.",
+        "Sohbet servisi henüz yapılandırılmadı. Yöneticinin GEMINI_API_KEY çevre değişkenini ayarlaması gerekiyor. Şimdilik info@bilardomarket.com adresinden bize ulaşabilirsiniz.",
     });
   }
 
   try {
-    const upstream = await fetch("https://api.anthropic.com/v1/messages", {
+    const model = process.env.GEMINI_MODEL ?? "gemini-2.0-flash";
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;
+
+    const upstream = await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "x-api-key": apiKey,
-        "anthropic-version": "2023-06-01",
+        "x-goog-api-key": apiKey,
       },
       body: JSON.stringify({
-        model: "claude-haiku-4-5-20251001",
-        max_tokens: 600,
-        system: systemPrompt,
-        messages: messages.map((m) => ({
-          role: m.role,
-          content: m.content,
-        })),
+        systemInstruction: { parts: [{ text: systemPrompt }] },
+        contents: toGeminiContents(messages),
+        generationConfig: {
+          maxOutputTokens: 600,
+          temperature: 0.6,
+        },
       }),
     });
 
     if (!upstream.ok) {
       const errText = await upstream.text();
-      console.error("Anthropic API error:", upstream.status, errText);
+      console.error("Gemini API error:", upstream.status, errText);
       return Response.json({
         message:
           "Üzgünüm, şu anda yanıt veremiyorum. Lütfen biraz sonra tekrar deneyin.",
@@ -134,11 +143,15 @@ export async function POST(request: NextRequest) {
     }
 
     const data = (await upstream.json()) as {
-      content?: Array<{ type: string; text?: string }>;
+      candidates?: Array<{
+        content?: { parts?: Array<{ text?: string }> };
+      }>;
     };
     const text =
-      data.content?.find((c) => c.type === "text")?.text ??
-      "Bir cevap üretemedim, lütfen tekrar deneyin.";
+      data.candidates?.[0]?.content?.parts
+        ?.map((p) => p.text)
+        .filter(Boolean)
+        .join("") ?? "Bir cevap üretemedim, lütfen tekrar deneyin.";
 
     return Response.json({ message: text });
   } catch (err) {
