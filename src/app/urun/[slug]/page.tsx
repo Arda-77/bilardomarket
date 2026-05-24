@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ProductCard from "@/components/ProductCard";
 import ProductActions from "@/components/ProductActions";
+import StockIndicator from "@/components/StockIndicator";
 import {
   categoryNames,
   formatPrice,
@@ -97,10 +98,10 @@ export default async function ProductPage({
                 <p className="text-coffee-soft text-sm mt-2">KDV dahil fiyattır</p>
               </div>
 
-              <div className="mb-8 p-5 bg-ivory-deep rounded-lg border border-line">
-                <div className="flex items-center gap-2 text-sm text-coffee-soft mb-1">
-                  <span className="w-2 h-2 bg-green rounded-full" />
-                  Stokta var · Hızlı kargo
+              <div className="mb-8 p-5 bg-ivory-deep rounded-lg border border-line space-y-2">
+                <StockIndicator productId={product.id} size="md" showQuantity />
+                <div className="text-sm text-coffee-soft">
+                  500 TL üzeri kargo ücretsiz · İstanbul 1 iş günü
                 </div>
               </div>
 

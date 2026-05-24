@@ -28,6 +28,7 @@ export default function Footer() {
             <li><Link href="/sss" className="hover:text-gold">SSS</Link></li>
             <li><Link href="/teslimat" className="hover:text-gold">Teslimat</Link></li>
             <li><Link href="/iade" className="hover:text-gold">İade & Değişim</Link></li>
+            <li><Link href="/iletisim" className="hover:text-gold">İletişim</Link></li>
             <li><Link href="/gizlilik" className="hover:text-gold">Gizlilik Politikası</Link></li>
           </ul>
         </div>

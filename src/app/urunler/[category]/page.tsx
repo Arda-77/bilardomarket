@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import ProductCard from "@/components/ProductCard";
+import CategoryProducts from "@/components/CategoryProducts";
 import {
   categoryNames,
   getProductsByCategory,
@@ -61,30 +61,7 @@ export default async function CategoryPage({
             <p className="text-coffee-soft">{products.length} ürün listeleniyor</p>
           </div>
 
-          {subcategories.length > 0 && (
-            <div className="mb-10 flex flex-wrap gap-2">
-              {subcategories.map((sub) => (
-                <span
-                  key={sub.slug}
-                  className="bg-white border border-line text-coffee text-sm px-4 py-2 rounded-full"
-                >
-                  {sub.name}
-                </span>
-              ))}
-            </div>
-          )}
-
-          {products.length === 0 ? (
-            <p className="text-coffee-soft text-center py-20">
-              Bu kategoride henüz ürün bulunmuyor.
-            </p>
-          ) : (
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-              {products.map((product) => (
-                <ProductCard key={product.id} product={product} />
-              ))}
-            </div>
-          )}
+          <CategoryProducts products={products} subcategories={subcategories} />
         </div>
       </main>
       <Footer />

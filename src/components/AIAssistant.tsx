@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useRef, useEffect, type FormEvent } from "react";
-import { MessageCircle, X, Send, Sparkles } from "lucide-react";
+import { X, Send, Sparkles } from "lucide-react";
+import { useCart } from "@/contexts/CartContext";
 
 interface Message {
   role: "user" | "assistant";
@@ -20,6 +21,7 @@ export default function AIAssistant() {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const endRef = useRef<HTMLDivElement>(null);
+  const { items } = useCart();
 
   useEffect(() => {
     if (open) endRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -43,6 +45,11 @@ export default function AIAssistant() {
           messages: [...messages, userMessage].map(({ role, content }) => ({
             role,
             content,
+          })),
+          cart: items.map((i) => ({
+            name: i.product.name,
+            quantity: i.quantity,
+            price: i.product.price,
           })),
         }),
       });
