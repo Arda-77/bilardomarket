@@ -6,7 +6,6 @@ import Footer from "@/components/Footer";
 import ProductCard from "@/components/ProductCard";
 import ProductActions from "@/components/ProductActions";
 import StockIndicator from "@/components/StockIndicator";
-import ReviewSection from "@/components/ReviewSection";
 import RecentlyViewed from "@/components/RecentlyViewed";
 import ProductViewTracker from "@/components/ProductViewTracker";
 import {
@@ -121,8 +120,6 @@ export default async function ProductPage({
           </div>
 
           <ProductViewTracker product={product} />
-
-          <ReviewSection productId={product.id} />
 
           {/* Related products */}
           {related.length > 0 && (
