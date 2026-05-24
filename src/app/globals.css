@@ -3,14 +3,15 @@
 @theme {
   /* BilardoMarket — Sofistike Atölye Estetiği renk paleti */
   --color-ivory: #fafaf7;
-  --color-ivory-deep: #f5f0e8;
+  --color-ivory-deep: #f3ede2;
   --color-coffee: #1c1410;
   --color-coffee-soft: #6b5a4e;
   --color-green: #2d6a4f;
-  --color-green-deep: #1b4332;
+  --color-green-deep: #163a2b;
+  --color-green-night: #0a2018;
   --color-gold: #b8860b;
   --color-gold-soft: #d4a73c;
-  --color-line: #e8e0d0;
+  --color-line: #e6dccb;
 
   --font-display: var(--font-display), "Cormorant Garamond", Georgia, serif;
   --font-body: var(--font-body), "Nunito Sans", system-ui, sans-serif;
@@ -24,4 +25,13 @@ body {
 
 h1, h2, h3, h4 {
   font-family: var(--font-display);
+  letter-spacing: -0.01em;
+}
+
+/* Fiyat metni için tabular sayı, sıkı tracking — şık ve okunur */
+.price {
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-feature-settings: "tnum" 1, "lnum" 1;
+  letter-spacing: -0.02em;
 }

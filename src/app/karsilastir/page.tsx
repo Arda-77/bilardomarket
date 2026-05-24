@@ -102,7 +102,7 @@ export default function ComparisonPage() {
                       Fiyat
                     </td>
                     {items.map((p) => (
-                      <td key={p.id} className="px-4 py-3 font-display text-lg font-bold text-green">
+                      <td key={p.id} className="px-4 py-3 price text-lg text-green-deep">
                         {formatPrice(p.price)}
                       </td>
                     ))}

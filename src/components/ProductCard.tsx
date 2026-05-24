@@ -80,7 +80,7 @@ export default function ProductCard({ product }: { product: Product }) {
             {product.name}
           </h3>
           <div className="flex items-center justify-between mb-2">
-            <span className="font-display text-xl font-bold text-green">
+            <span className="price text-xl text-green-deep">
               {formatPrice(product.price)}
             </span>
           </div>

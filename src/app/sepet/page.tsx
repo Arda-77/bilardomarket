@@ -94,7 +94,7 @@ export default function CartPage() {
                             <Plus size={14} />
                           </button>
                         </div>
-                        <span className="font-display text-lg font-bold text-green">
+                        <span className="price text-lg text-green-deep">
                           {formatPrice(item.product.price * item.quantity)}
                         </span>
                       </div>
@@ -134,7 +134,7 @@ export default function CartPage() {
                     <span className="font-display text-lg text-coffee">
                       Toplam
                     </span>
-                    <span className="font-display text-2xl font-bold text-green">
+                    <span className="price text-2xl text-green-deep">
                       {formatPrice(totalPrice)}
                     </span>
                   </div>

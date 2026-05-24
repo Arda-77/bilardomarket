@@ -92,7 +92,7 @@ export default async function ProductPage({
                 {product.name}
               </h1>
               <div className="mb-8">
-                <span className="font-display text-5xl font-bold text-green">
+                <span className="price text-5xl text-green-deep">
                   {formatPrice(product.price)}
                 </span>
                 <p className="text-coffee-soft text-sm mt-2">KDV dahil fiyattır</p>

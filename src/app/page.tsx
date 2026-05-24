@@ -33,7 +33,7 @@ export default function Home() {
       <main className="flex-1">
         {/* Hero */}
         <section className="relative min-h-[80vh] flex items-center overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-br from-coffee via-coffee/95 to-green-deep" />
+          <div className="absolute inset-0 bg-gradient-to-br from-green-night via-coffee to-green-deep" />
           <div className="container relative z-10 mx-auto max-w-6xl px-6">
             <div className="max-w-2xl">
               <div className="flex items-center gap-3 mb-6">
