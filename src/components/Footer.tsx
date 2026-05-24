@@ -19,6 +19,9 @@ export default function Footer() {
             <li><Link href="/urunler/bilardo" className="hover:text-gold">Bilardo</Link></li>
             <li><Link href="/urunler/dart" className="hover:text-gold">Dart</Link></li>
             <li><Link href="/urunler/oyun" className="hover:text-gold">Oyun</Link></li>
+            <li><Link href="/oyun-secici" className="hover:text-gold">Oyun Seçici</Link></li>
+            <li><Link href="/rehber" className="hover:text-gold">Bilardo Rehberi</Link></li>
+            <li><Link href="/toptan" className="hover:text-gold">Toptan / Kurumsal</Link></li>
           </ul>
         </div>
 

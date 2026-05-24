@@ -61,10 +61,10 @@ export default function Home() {
                   Ürünleri Keşfet
                 </Link>
                 <Link
-                  href="/urunler/dart"
+                  href="/oyun-secici"
                   className="border border-ivory/30 hover:border-gold hover:text-gold text-ivory font-semibold px-8 py-4 rounded-lg transition-colors"
                 >
-                  Dart Ürünleri
+                  Oyun Seçici →
                 </Link>
               </div>
             </div>

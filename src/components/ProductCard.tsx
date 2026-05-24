@@ -2,40 +2,62 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Heart, ShoppingCart, Check } from "lucide-react";
+import { Heart, ShoppingCart, Check, Scale } from "lucide-react";
 import type { Product } from "@/lib/products";
 import { formatPrice } from "@/lib/products";
 import { useCart } from "@/contexts/CartContext";
 import { useFavorites } from "@/contexts/FavoritesContext";
+import { useComparison } from "@/contexts/ComparisonContext";
 import { getProductStock } from "@/lib/inventory";
 import StockIndicator from "@/components/StockIndicator";
 
 export default function ProductCard({ product }: { product: Product }) {
   const { addItem, isInCart } = useCart();
   const { toggle, isFavorite } = useFavorites();
+  const { toggle: toggleCompare, isInComparison } = useComparison();
   const inCart = isInCart(product.id);
   const fav = isFavorite(product.id);
+  const inCompare = isInComparison(product.id);
   const stock = getProductStock(product.id);
   const outOfStock = stock.status === "out_of_stock";
 
   return (
     <div className="group relative bg-white rounded-lg border border-line overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-200">
-      <button
-        type="button"
-        onClick={(e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          toggle(product);
-        }}
-        aria-label={fav ? "Favorilerden çıkar" : "Favorilere ekle"}
-        className={`absolute top-3 right-3 z-10 w-9 h-9 rounded-full flex items-center justify-center transition-all ${
-          fav
-            ? "bg-green text-ivory"
-            : "bg-white/90 text-coffee hover:bg-white"
-        }`}
-      >
-        <Heart size={16} fill={fav ? "currentColor" : "none"} />
-      </button>
+      <div className="absolute top-3 right-3 z-10 flex flex-col gap-2">
+        <button
+          type="button"
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            toggle(product);
+          }}
+          aria-label={fav ? "Favorilerden çıkar" : "Favorilere ekle"}
+          className={`w-9 h-9 rounded-full flex items-center justify-center transition-all ${
+            fav ? "bg-green text-ivory" : "bg-white/90 text-coffee hover:bg-white"
+          }`}
+        >
+          <Heart size={16} fill={fav ? "currentColor" : "none"} />
+        </button>
+        <button
+          type="button"
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const result = toggleCompare(product);
+            if (result === "full") {
+              alert("En fazla 3 ürün karşılaştırabilirsiniz.");
+            }
+          }}
+          aria-label={inCompare ? "Karşılaştırmadan çıkar" : "Karşılaştır"}
+          className={`w-9 h-9 rounded-full flex items-center justify-center transition-all ${
+            inCompare
+              ? "bg-coffee text-ivory"
+              : "bg-white/90 text-coffee hover:bg-white"
+          }`}
+        >
+          <Scale size={16} />
+        </button>
+      </div>
 
       <Link href={`/urun/${product.slug}`} className="block">
         <div className="relative aspect-square bg-ivory-deep overflow-hidden">
