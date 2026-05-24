@@ -69,11 +69,18 @@ export default function ProductCard({ product }: { product: Product }) {
             className="object-contain p-4 group-hover:scale-105 transition-transform duration-300"
             unoptimized
           />
-          {product.brand && (
-            <span className="absolute top-3 left-3 bg-coffee/90 text-ivory text-[10px] font-semibold tracking-wider uppercase px-2 py-1 rounded">
-              {product.brand}
-            </span>
-          )}
+          <div className="absolute top-3 left-3 flex flex-col gap-1.5 items-start">
+            {product.salesRank !== undefined && (
+              <span className="bg-gold text-coffee text-[10px] font-bold tracking-wider uppercase px-2 py-1 rounded shadow-md">
+                Çok Satan
+              </span>
+            )}
+            {product.brand && (
+              <span className="bg-coffee/90 text-ivory text-[10px] font-semibold tracking-wider uppercase px-2 py-1 rounded">
+                {product.brand}
+              </span>
+            )}
+          </div>
         </div>
         <div className="p-4 pb-2">
           <h3 className="font-body font-semibold text-sm text-coffee line-clamp-2 min-h-[2.5rem] mb-2 group-hover:text-green transition-colors">

@@ -2,9 +2,10 @@ import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ProductCard from "@/components/ProductCard";
-import { getFeaturedProducts, getProductsByCategory } from "@/lib/products";
+import { getBestSellers, getFeaturedProducts, getProductsByCategory } from "@/lib/products";
 
 export default function Home() {
+  const bestSellers = getBestSellers(undefined, 5);
   const featured = getFeaturedProducts(8);
   const categoryCards = [
     {
@@ -70,6 +71,35 @@ export default function Home() {
             </div>
           </div>
         </section>
+
+        {/* Best Sellers */}
+        {bestSellers.length > 0 && (
+          <section className="py-20 bg-ivory">
+            <div className="container mx-auto max-w-6xl px-6">
+              <div className="flex items-end justify-between mb-12 gap-4 flex-wrap">
+                <div>
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="h-px w-12 bg-gold" />
+                    <span className="text-gold text-xs font-semibold tracking-[0.25em] uppercase">
+                      Bestseller
+                    </span>
+                  </div>
+                  <h2 className="text-4xl md:text-5xl font-bold text-coffee mb-2">
+                    En Çok Satılanlar
+                  </h2>
+                  <p className="text-coffee-soft">
+                    Müşterilerimizin en çok tercih ettiği ürünler
+                  </p>
+                </div>
+              </div>
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+                {bestSellers.map((product) => (
+                  <ProductCard key={product.id} product={product} />
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* Categories */}
         <section className="py-20 bg-ivory-deep">
