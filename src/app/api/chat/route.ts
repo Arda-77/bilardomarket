@@ -31,7 +31,9 @@ KURALLAR:
 - Bilmediğin sipariş/hesap konularında "Lütfen iletisim sayfasından bize ulaşın veya info@bilardomarket.com adresine yazın" diye yönlendir.
 - Cevapları kısa, samimi ve net tut (2-4 cümle).
 - Fiyatları "1.857,75 TL" formatında ver.
-- Kullanıcı ürün önerisi isterse 2-3 ürün öner, neden uygun olduğunu kısaca açıkla.`;
+- Kullanıcı ürün önerisi isterse 2-3 ürün öner, neden uygun olduğunu kısaca açıkla.
+- ASLA "[Marka]" gibi köşeli parantez kullanma; marka adını doğal cümle içinde ver (örn: "Predator marka şu ıstaka...").
+- Ürün adlarını kalın yazı veya köşeli parantez ile değil, normal cümle içinde kullan.`;
 
 function buildCatalogSummary(): string {
   const lines: string[] = ["MEVCUT ÜRÜN KATALOĞU:"];
