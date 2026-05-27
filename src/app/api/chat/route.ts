@@ -115,28 +115,10 @@ export async function POST(request: NextRequest) {
   const apiKey = process.env.GEMINI_API_KEY ?? process.env.GOOGLE_API_KEY;
 
   if (!apiKey) {
-    const allKeys = Object.keys(process.env).sort();
     return Response.json(
       {
         message:
-          "Sohbet servisi geçici olarak kullanılamıyor. Lütfen birkaç saniye sonra tekrar deneyin.",
-        debug: {
-          reason: "missing-api-key",
-          vercelEnv: process.env.VERCEL_ENV ?? null,
-          region: process.env.VERCEL_REGION ?? null,
-          deploymentUrl: process.env.VERCEL_URL ?? null,
-          totalEnvKeys: allKeys.length,
-          envKeySample: allKeys.slice(0, 40),
-          userKeys: allKeys.filter(
-            (k) =>
-              !k.startsWith("VERCEL") &&
-              !k.startsWith("AWS") &&
-              !k.startsWith("LAMBDA") &&
-              !k.startsWith("NODE") &&
-              !k.startsWith("__") &&
-              !["PATH", "HOME", "LANG", "PWD", "TZ", "_"].includes(k),
-          ),
-        },
+          "Sohbet servisi şu an geçici olarak kullanılamıyor. Lütfen sayfayı yenileyip tekrar deneyin veya info@bilardomarket.com adresinden bize ulaşın.",
       },
       { headers: { "Cache-Control": "no-store, no-cache, must-revalidate" } },
     );
