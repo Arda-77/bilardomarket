@@ -115,6 +115,7 @@ export async function POST(request: NextRequest) {
   const apiKey = process.env.GEMINI_API_KEY ?? process.env.GOOGLE_API_KEY;
 
   if (!apiKey) {
+    const allKeys = Object.keys(process.env).sort();
     return Response.json(
       {
         message:
@@ -123,8 +124,17 @@ export async function POST(request: NextRequest) {
           reason: "missing-api-key",
           vercelEnv: process.env.VERCEL_ENV ?? null,
           region: process.env.VERCEL_REGION ?? null,
-          envKeys: Object.keys(process.env).filter((k) =>
-            k.toLowerCase().includes("gemini") || k.toLowerCase().includes("google"),
+          deploymentUrl: process.env.VERCEL_URL ?? null,
+          totalEnvKeys: allKeys.length,
+          envKeySample: allKeys.slice(0, 40),
+          userKeys: allKeys.filter(
+            (k) =>
+              !k.startsWith("VERCEL") &&
+              !k.startsWith("AWS") &&
+              !k.startsWith("LAMBDA") &&
+              !k.startsWith("NODE") &&
+              !k.startsWith("__") &&
+              !["PATH", "HOME", "LANG", "PWD", "TZ", "_"].includes(k),
           ),
         },
       },
