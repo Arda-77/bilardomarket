@@ -6,6 +6,12 @@ import {
   type Product,
 } from "@/lib/products";
 
+// Force dynamic execution and disable any caching at every layer. Without this
+// some Vercel instances can serve a stale response when env vars change.
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+export const fetchCache = "force-no-store";
+
 interface ChatMessage {
   role: "user" | "assistant";
   content: string;
@@ -109,10 +115,21 @@ export async function POST(request: NextRequest) {
   const apiKey = process.env.GEMINI_API_KEY ?? process.env.GOOGLE_API_KEY;
 
   if (!apiKey) {
-    return Response.json({
-      message:
-        "Sohbet servisi henüz yapılandırılmadı. Yöneticinin GEMINI_API_KEY çevre değişkenini ayarlaması gerekiyor. Şimdilik info@bilardomarket.com adresinden bize ulaşabilirsiniz.",
-    });
+    return Response.json(
+      {
+        message:
+          "Sohbet servisi geçici olarak kullanılamıyor. Lütfen birkaç saniye sonra tekrar deneyin.",
+        debug: {
+          reason: "missing-api-key",
+          vercelEnv: process.env.VERCEL_ENV ?? null,
+          region: process.env.VERCEL_REGION ?? null,
+          envKeys: Object.keys(process.env).filter((k) =>
+            k.toLowerCase().includes("gemini") || k.toLowerCase().includes("google"),
+          ),
+        },
+      },
+      { headers: { "Cache-Control": "no-store, no-cache, must-revalidate" } },
+    );
   }
 
   // Try models in order — Gemini occasionally renames/retires them; the first
