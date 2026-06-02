@@ -75,15 +75,19 @@ export default function AIAssistant() {
   return (
     <>
       {!open && (
-        <button
-          type="button"
-          onClick={() => setOpen(true)}
-          aria-label="BilardoMarket AI ile sohbet"
-          className="fixed bottom-6 right-6 z-50 bg-green hover:bg-green-deep text-ivory rounded-full shadow-2xl px-5 py-4 flex items-center gap-2 font-semibold transition-all hover:scale-105"
-        >
-          <Sparkles size={20} />
-          <span className="hidden sm:inline">BilardoMarket AI</span>
-        </button>
+        <div className="group fixed bottom-6 right-6 z-50">
+          <span className="pointer-events-none absolute right-[4.25rem] top-1/2 -translate-y-1/2 translate-x-2 whitespace-nowrap rounded-lg bg-coffee px-3 py-1.5 text-sm font-semibold text-ivory opacity-0 shadow-lg transition-all duration-200 group-hover:translate-x-0 group-hover:opacity-100">
+            BilardoMarket AI
+          </span>
+          <button
+            type="button"
+            onClick={() => setOpen(true)}
+            aria-label="BilardoMarket AI ile sohbet"
+            className="flex h-14 w-14 items-center justify-center rounded-full bg-green text-ivory shadow-2xl transition-all hover:scale-105 hover:bg-green-deep"
+          >
+            <Sparkles size={24} />
+          </button>
+        </div>
       )}
 
       {open && (
