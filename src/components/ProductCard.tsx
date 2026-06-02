@@ -95,7 +95,7 @@ export default function ProductCard({ product }: { product: Product }) {
         </div>
         <div className="p-4 pb-2">
           <h3 className="font-body font-semibold text-sm text-coffee line-clamp-2 min-h-[2.5rem] mb-2 group-hover:text-green transition-colors">
-            {product.name}
+            {product.displayName ?? product.name}
           </h3>
           <div className="flex items-center justify-between mb-2">
             <span className="price text-xl text-green-deep">

@@ -14,6 +14,8 @@ export interface Product {
   id: string;
   slug: string;
   name: string;
+  /** Kısa ad — ürün kartlarında gösterilir. Yoksa `name` kullanılır. */
+  displayName?: string;
   price: number;
   image: string;
   category: Category;
@@ -69,6 +71,7 @@ export const products: Product[] = [
     id: "4107",
     slug: "winmau-blade-6-dual-core-profesyonel-dart-tahtasi",
     name: "Winmau Blade 6 Dual-Core Profesyonel Dart Tahtas\u0131",
+    displayName: "Winmau Blade 6 Dual-Core Dart Tahtas\u0131",
     price: 6436.17,
     image: "https://www.deryabilardo.com/img/products/small/db0574_td_3.jpg",
     category: "dart",
@@ -81,6 +84,7 @@ export const products: Product[] = [
     id: "4063",
     slug: "winmau-blade-6-profesyonel-dart-tahtasi",
     name: "Winmau Blade 6 Profesyonel Dart Tahtas\u0131",
+    displayName: "Winmau Blade 6 Dart Tahtas\u0131",
     price: 5323.75,
     image: "https://www.deryabilardo.com/img/products/small/winmblade6_td_3.jpg",
     category: "dart",
@@ -183,6 +187,7 @@ export const products: Product[] = [
     id: "3877",
     slug: "super-aramith-pro-cup-tv-profesyonel-pool-bilardo-top-seti--572-mm-",
     name: "Super Aramith Pro-Cup TV Profesyonel Pool Bilardo Top Seti (57.2 mm)",
+    displayName: "Super Aramith Pro-Cup TV Pool Bilardo Top Seti (57.2 mm)",
     price: 11464.86,
     image: "https://www.deryabilardo.com/img/products/small/db00063_td_3.jpg",
     category: "bilardo",
@@ -271,6 +276,7 @@ export const products: Product[] = [
     id: "3895",
     slug: "cosmos-diamond-ultra-c-profesyonel-bilardo-top-seti",
     name: "Cosmos Diamond Ultra-C Profesyonel Bilardo Top Seti",
+    displayName: "Cosmos Diamond Ultra-C Bilardo Top Seti",
     price: 12208.07,
     image: "https://www.deryabilardo.com/img/products/small/db00094_td_3.jpg",
     category: "bilardo",
@@ -524,6 +530,7 @@ export const products: Product[] = [
     id: "3954",
     slug: "aramith-profesyonel-bilardo-topu-onarici-ve-parlatici-solusyon",
     name: "Aramith Profesyonel Bilardo Topu Onar\u0131c\u0131 ve Parlat\u0131c\u0131 Sol\u00fcsyon",
+    displayName: "Aramith Bilardo Topu Onar\u0131c\u0131 ve Parlat\u0131c\u0131 Sol\u00fcsyon",
     price: 743.21,
     image: "https://www.deryabilardo.com/img/products/small/db00405_td_3.jpg",
     category: "bilardo",
@@ -832,6 +839,7 @@ export const products: Product[] = [
     id: "4083",
     slug: "britannia-england-profesyonel-snooker-bilardo-istakasi",
     name: "Britannia England Profesyonel Snooker Bilardo Istakas\u0131",
+    displayName: "Britannia England Snooker Bilardo Istakas\u0131",
     price: 6369.43,
     image: "https://www.deryabilardo.com/img/products/small/britsnook45456031_td_3.jpg",
     category: "bilardo",
@@ -865,6 +873,7 @@ export const products: Product[] = [
     id: "4089",
     slug: "molinari-novarossi-manticore-profesyonel-bilardo-istakasi",
     name: "Molinari NovaRossi Manticore Profesyonel Bilardo Istakas\u0131",
+    displayName: "Molinari NovaRossi Manticore Bilardo Istakas\u0131",
     price: 11146.49,
     image: "https://www.deryabilardo.com/img/products/small/db565643309_td_3.jpg",
     category: "bilardo",
@@ -876,6 +885,7 @@ export const products: Product[] = [
     id: "4090",
     slug: "molinari-novarossi-phoenix-profesyonel-bilardo-istakasi",
     name: "Molinari NovaRossi Phoenix Profesyonel Bilardo Istakas\u0131",
+    displayName: "Molinari NovaRossi Phoenix Bilardo Istakas\u0131",
     price: 11146.49,
     image: "https://www.deryabilardo.com/img/products/small/db56067090_td_3.jpg",
     category: "bilardo",
@@ -975,6 +985,7 @@ export const products: Product[] = [
     id: "4121",
     slug: "cyclop-zeus-tv-profesyonel-karambol-top-seti",
     name: "Cyclop Zeus TV Profesyonel Karambol Top Seti",
+    displayName: "Cyclop Zeus TV Karambol Top Seti",
     price: 3450.11,
     image: "https://www.deryabilardo.com/img/products/small/db786908009_td_3.jpg",
     category: "bilardo",
@@ -1348,7 +1359,7 @@ export const products: Product[] = [
   {
     id: "4262",
     slug: "billiard-balls-tournament-amerikan-top--uzakdogu-mense--",
-    name: "Billiard Balls Tournament Amerikan Top-(uzakdo\u011fu men\u015fe )",
+    name: "Billiard Balls Tournament Amerikan Top",
     price: 3184.71,
     image: "https://www.deryabilardo.com/img/products/small/poolcin0894913474_td_3.jpg",
     category: "bilardo",
@@ -1414,7 +1425,7 @@ export const products: Product[] = [
   {
     id: "4270",
     slug: "gold-star-920-bilardo-cuhasi--yesil",
-    name: "Gold Star 920 Bilardo \u00c7uhas\u0131  Ye\u015fil",
+    name: "Gold Star 920 Bilardo \u00c7uhas\u0131 Ye\u015fil",
     price: 716.72,
     image: "https://www.deryabilardo.com/img/products/small/dbs7675645332222_td_3.jpg",
     category: "bilardo",
@@ -1425,7 +1436,7 @@ export const products: Product[] = [
   {
     id: "4271",
     slug: "gold-star-920-bilardo-cuhasi-sari---yesil|",
-    name: "Gold Star 920 Bilardo \u00c7uhas\u0131 Sar\u0131 - Ye\u015fil|",
+    name: "Gold Star 920 Bilardo \u00c7uhas\u0131 Sar\u0131 - Ye\u015fil",
     price: 716.72,
     image: "https://www.deryabilardo.com/img/products/small/dbs87867789*09-9*9_td_3.jpg",
     category: "bilardo",
@@ -2250,7 +2261,7 @@ export const products: Product[] = [
   {
     id: "4725",
     slug: "bicycle-skull-metallic-silver-playing-cards-\u2013-gambler-s-warehouse",
-    name: "Bicycle Skull Metallic Silver Playing Cards \u2013 Gambler\u2019s Warehouse",
+    name: "Bicycle Skull Metallic Silver Playing Cards",
     price: 904.24,
     image: "https://www.deryabilardo.com/img/products/small/yeni-proje---2026-02-17t100214418-8a47ff7.webp",
     category: "oyun",
@@ -2371,7 +2382,7 @@ export const products: Product[] = [
   {
     id: "4790",
     slug: "cherry-casino-house-deck-playing-cards-true-black--black-hawk--by-pure-imagination-projects",
-    name: "Cherry Casino House Deck Playing Cards True Black (Black Hawk) by Pure Imagination Projects",
+    name: "Cherry Casino House Deck Playing Cards True Black (Black Hawk)",
     price: 2287.36,
     image: "https://www.deryabilardo.com/img/products/small/yeni-proje---2026-02-17t125921506-20f8eb2.webp",
     category: "oyun",
@@ -2382,7 +2393,7 @@ export const products: Product[] = [
   {
     id: "4794",
     slug: "limited-edition-cherry-casino--monte-carlo-black-and-gold--numbered-seals-playing-cards-by-pure-imagination-projects",
-    name: "Limited Edition Cherry Casino (Monte Carlo Black and Gold) Numbered Seals Playing Cards by Pure Imagination Projects",
+    name: "Limited Edition Cherry Casino (Monte Carlo Black and Gold) Numbered Seals Playing Cards",
     price: 1435.56,
     image: "https://www.deryabilardo.com/img/products/small/yeni-proje---2026-02-19t124027892-9241a07.webp",
     category: "oyun",
@@ -2393,7 +2404,7 @@ export const products: Product[] = [
   {
     id: "4795",
     slug: "the-serial-killer-deck-by-taylor-imagineering",
-    name: "The Serial Killer Deck by Taylor Imagineering",
+    name: "The Serial Killer Deck",
     price: 1595.53,
     image: "https://www.deryabilardo.com/img/products/small/yeni-proje---2026-02-17t131449317-157e1c3.webp",
     category: "oyun",
@@ -2415,7 +2426,7 @@ export const products: Product[] = [
   {
     id: "4804",
     slug: "deck-seal-black--100-seals--by-us-playing-card-company",
-    name: "Deck Seal BLACK (100 SEALS) by US Playing Card Company",
+    name: "Deck Seal BLACK (100 SEALS)",
     price: 1329.61,
     image: "https://www.deryabilardo.com/img/products/small/yeni-proje--18--dee37e9.webp",
     category: "oyun",
@@ -2437,7 +2448,7 @@ export const products: Product[] = [
   {
     id: "4810",
     slug: "kadar-oyun-kartlari-designed-by-christopher-j-gould",
-    name: "KADAR Oyun Kartlar\u0131 Designed by Christopher J Gould",
+    name: "KADAR Oyun Kartlar\u0131",
     price: 1170.16,
     image: "https://www.deryabilardo.com/img/products/small/yeni-proje--22--1f908ce.webp",
     category: "oyun",
@@ -2602,7 +2613,7 @@ export const products: Product[] = [
   {
     id: "4938",
     slug: "longoni-giotto-autunno-4x8-luks-istaka-cantasi",
-    name: "Longoni Giotto Autunno Deri Istaka \u00c7antas\u0131 4x8 | L\u00fcks Bilardo Aksesuarlar\u0131",
+    name: "Longoni Giotto Autunno Deri Istaka \u00c7antas\u0131 4x8",
     price: 38670.0,
     image: "https://www.deryabilardo.com/img/products/small/gi\u0307ottor-800x800-ef7c2a3.webp",
     category: "bilardo",
