@@ -74,7 +74,7 @@ export default function ComparisonPage() {
                           </button>
                           <Link
                             href={`/urun/${p.slug}`}
-                            className="block relative aspect-square bg-ivory-deep rounded-lg mb-3"
+                            className="block relative aspect-square bg-white border border-line rounded-lg mb-3"
                           >
                             <Image
                               src={p.image}

@@ -71,7 +71,7 @@ export default function ProductCard({ product }: { product: Product }) {
       </div>
 
       <Link href={`/urun/${product.slug}`} className="block">
-        <div className="relative aspect-square bg-ivory-deep overflow-hidden">
+        <div className="relative aspect-square bg-white border-b border-line overflow-hidden">
           <Image
             src={product.image}
             alt={product.name}

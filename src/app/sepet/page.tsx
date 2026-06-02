@@ -45,7 +45,7 @@ export default function CartPage() {
                   >
                     <Link
                       href={`/urun/${item.product.slug}`}
-                      className="relative w-24 h-24 flex-shrink-0 bg-ivory-deep rounded"
+                      className="relative w-24 h-24 flex-shrink-0 bg-white border border-line rounded"
                     >
                       <Image
                         src={item.product.image}

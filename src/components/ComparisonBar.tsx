@@ -21,7 +21,7 @@ export default function ComparisonBar() {
               key={p.id}
               className="relative flex items-center gap-2 bg-ivory/5 rounded-lg px-3 py-1.5 pr-8 min-w-0 flex-shrink-0"
             >
-              <div className="relative w-8 h-8 bg-ivory rounded flex-shrink-0">
+              <div className="relative w-8 h-8 bg-white rounded flex-shrink-0">
                 <Image
                   src={p.image}
                   alt={p.name}
