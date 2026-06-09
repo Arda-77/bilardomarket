@@ -57,13 +57,13 @@ export default function Home() {
               <div className="flex flex-wrap gap-4">
                 <Link
                   href="/urunler/bilardo"
-                  className="bg-green hover:bg-green-deep text-ivory font-semibold px-8 py-4 rounded-lg transition-colors"
+                  className="bg-gold hover:bg-gold-soft text-coffee font-bold px-8 py-4 rounded-lg shadow-lg shadow-gold/20 transition-colors"
                 >
                   Ürünleri Keşfet
                 </Link>
                 <Link
                   href="/oyun-secici"
-                  className="border border-ivory/30 hover:border-gold hover:text-gold text-ivory font-semibold px-8 py-4 rounded-lg transition-colors"
+                  className="border border-gold/60 text-gold hover:bg-gold/10 font-semibold px-8 py-4 rounded-lg transition-colors"
                 >
                   Oyun Seçici →
                 </Link>

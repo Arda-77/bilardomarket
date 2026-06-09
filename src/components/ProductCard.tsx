@@ -93,11 +93,11 @@ export default function ProductCard({ product }: { product: Product }) {
             )}
           </div>
         </div>
-        <div className="p-4 pb-2">
-          <h3 className="font-body font-semibold text-sm text-coffee line-clamp-2 min-h-[2.5rem] mb-2 group-hover:text-green transition-colors">
+        <div className="p-4 pb-3">
+          <h3 className="font-body font-semibold text-sm text-coffee line-clamp-2 min-h-[2.5rem] mb-3 group-hover:text-green transition-colors">
             {product.displayName ?? product.name}
           </h3>
-          <div className="flex items-center justify-between mb-2">
+          <div className="flex items-center justify-between mb-2.5">
             <span className="price text-xl text-green-deep">
               {formatPrice(product.price)}
             </span>
@@ -106,7 +106,7 @@ export default function ProductCard({ product }: { product: Product }) {
         </div>
       </Link>
 
-      <div className="px-4 pb-4">
+      <div className="px-4 pb-4 pt-3">
         <button
           type="button"
           onClick={() => {
@@ -115,12 +115,12 @@ export default function ProductCard({ product }: { product: Product }) {
             toast.success("Sepete eklendi", { description: product.name });
           }}
           disabled={outOfStock}
-          className={`w-full flex items-center justify-center gap-2 py-2.5 rounded-md text-sm font-semibold transition-colors ${
+          className={`w-full flex items-center justify-center gap-2 py-3 rounded-lg text-sm font-semibold border transition-all ${
             outOfStock
-              ? "bg-line text-coffee-soft cursor-not-allowed"
+              ? "bg-line/50 border-line text-coffee-soft cursor-not-allowed"
               : inCart
-              ? "bg-green-deep text-ivory"
-              : "bg-coffee hover:bg-green text-ivory"
+              ? "bg-green-deep border-green-deep text-ivory"
+              : "bg-transparent border-coffee/30 text-coffee hover:bg-coffee hover:text-ivory hover:border-coffee"
           }`}
         >
           {outOfStock ? (
