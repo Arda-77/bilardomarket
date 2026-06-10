@@ -2680,3 +2680,37 @@ export function getBestSellers(category?: Category, count = 6): Product[] {
   list.sort((a, b) => (a.salesRank ?? 99) - (b.salesRank ?? 99));
   return list.slice(0, count);
 }
+
+/**
+ * Bir ürüne gerçekten benzeyen ürünleri getirir.
+ * Öncelik sırası: 1) aynı alt kategori, 2) aynı marka, 3) aynı kategori (son çare).
+ * Böylece langırt masasının yanında langırt, Bicycle kartının yanında Bicycle çıkar.
+ */
+export function getRelatedProducts(product: Product, count = 4): Product[] {
+  const exclude = new Set<string>([product.id]);
+  const result: Product[] = [];
+
+  const add = (candidates: Product[]) => {
+    for (const p of candidates) {
+      if (result.length >= count) break;
+      if (exclude.has(p.id)) continue;
+      exclude.add(p.id);
+      result.push(p);
+    }
+  };
+
+  // 1) Aynı alt kategori — en benzer ürünler
+  add(products.filter((p) => p.subcategorySlug === product.subcategorySlug));
+
+  // 2) Aynı marka — alt kategori yeterli gelmezse
+  if (result.length < count && product.brand) {
+    add(products.filter((p) => p.brand === product.brand));
+  }
+
+  // 3) Aynı kategori — yine de boşluk varsa son çare
+  if (result.length < count) {
+    add(products.filter((p) => p.category === product.category));
+  }
+
+  return result;
+}

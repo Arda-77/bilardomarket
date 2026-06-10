@@ -12,7 +12,7 @@ import {
   categoryNames,
   formatPrice,
   getProductBySlug,
-  getProductsByCategory,
+  getRelatedProducts,
   products,
 } from "@/lib/products";
 
@@ -43,9 +43,7 @@ export default async function ProductPage({
   const product = getProductBySlug(slug);
   if (!product) notFound();
 
-  const related = getProductsByCategory(product.category)
-    .filter((p) => p.id !== product.id)
-    .slice(0, 4);
+  const related = getRelatedProducts(product, 4);
 
   return (
     <>
